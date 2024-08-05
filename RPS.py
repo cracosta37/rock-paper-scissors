@@ -3,6 +3,9 @@
 def player(prev_play, opponent_history=[]):
     opponent_history.append(prev_play)
 
+    ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
+    bad_response = {'S': 'P', 'P': 'R', 'R': 'S'}
+
     guess = "R"
     if len(opponent_history) > 2:
         guess = opponent_history[-2]
