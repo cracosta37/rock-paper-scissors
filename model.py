@@ -1,7 +1,9 @@
 import numpy as np
-from random import randint
+from random import choice
 
 def score_model(model, opponent_history=[]): 
+    """ Returns a score for a model's performance based on opponent history """
+
     if len(opponent_history) < 2:
         return float(-1.0)
     
@@ -23,7 +25,26 @@ def score_model(model, opponent_history=[]):
     return np.sum(model_record) / w_max
 
 def model0(opponent_history=[]):
-    return
+    """
+    Chooses the guess that would lose to or beat the player's 
+    last guess. Based on whether a player is changing their answers 
+    or not in the past three rounds.
+    """
+
+    ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
+    worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
+    
+    if len(opponent_history) > 2:      
+        repeats = sum(opponent_history[-i] == opponent_history[-i-1] for i in range(1, 3)) 
+        if repeats > 1:
+            guess = ideal_response[opponent_history[-1]]
+        else:
+            guess = worse_response[opponent_history[-1]]
+    elif len(opponent_history) > 0:
+        guess = worse_response[opponent_history[-1]]
+    else:
+        guess = choice(['R', 'P', 'S'])
+    return guess
 
 def model1(opponent_history=[]):
     return
