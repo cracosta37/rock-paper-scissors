@@ -24,6 +24,19 @@ def score_model(model, opponent_history=[]):
    
     return np.sum(model_record) / w_max
 
+def vectorize(choice1, choice2):
+    """ Returns a vector describing the difference between one choice and another """
+
+    ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
+    worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
+
+    if choice1 == ideal_response[choice2]:
+        return 1
+    elif choice1 == worse_response[choice2]:
+        return -1
+    else:
+        return 0
+
 def model0(opponent_history=[]):
     """
     Chooses the guess that would lose to or beat the player's 
