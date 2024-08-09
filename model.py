@@ -1,3 +1,4 @@
+import pandas as pd
 import numpy as np
 from random import choice
 
@@ -90,7 +91,24 @@ def model1(opponent_history=[]):
     return guess
 
 def model2(opponent_history=[]):
-    return
+    """
+    Chooses the choice that would beat the player's most frequent recent 
+    choice. Based on repeated choices
+    """
+
+    ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
+
+    if len(opponent_history) > 4:
+        recent_history = pd.Series(opponent_history[-5:])
+        most_freq = recent_history.value_counts().index[0]
+        guess = ideal_response[most_freq]
+    elif len(opponent_history) > 0:
+        history_series = pd.Series(opponent_history)
+        most_freq = history_series.value_counts().index[0]
+        guess = ideal_response[most_freq]
+    else: 
+        guess = choice(['R', 'P', 'S'])
+    return guess
 
 def model3(opponent_history=[]):
     return
