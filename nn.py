@@ -9,6 +9,6 @@ data_from_record_dtclf = pd.read_csv('Data/rps-record_dtclf')
 
 num_rounds = 0
 
-lables = np.empty((num_rounds, c.NUMBER_OF_IMPUTS ))
+lables = np.empty((num_rounds, c.NUMBER_OF_INPUTS ))
 
 
