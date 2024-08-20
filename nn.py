@@ -7,8 +7,17 @@ import constants as c
 data_from_record122 = pd.read_csv('Data/rps-record122.csv')
 data_from_record_dtclf = pd.read_csv('Data/rps-record_dtclf')
 
-num_rounds = 0
+labels_list = []
+inputs = np.empty((0, c.NUMBER_OF_INPUTS))
 
-lables = np.empty((num_rounds, c.NUMBER_OF_INPUTS ))
+for i in range(len(data_from_record122)):
+    if data_from_record122.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
+        labels_list.append([data_from_record122.iloc[i]['p1']])
+        inputs = np.vstack([inputs, data_from_record122.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
 
+for i in range(len(data_from_record_dtclf)):
+    if data_from_record_dtclf.iloc[i]['n'] >= c.NUMBER_OF_INPUTS:
+        labels_list.append([data_from_record_dtclf.iloc[i]['p1']])
+        inputs = np.vstack([inputs, data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
 
+labels = np.array(labels_list)
