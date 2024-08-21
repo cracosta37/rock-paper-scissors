@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 import constants as c
 
 data_from_record122 = pd.read_csv('Data/rps-record122.csv')
-data_from_record_dtclf = pd.read_csv('Data/rps-record_dtclf')
+data_from_record_dtclf = pd.read_csv('Data/rps-record_dtclf.csv')
 
 labels_list = []
 inputs = np.empty((0, c.NUMBER_OF_INPUTS))
@@ -38,6 +38,6 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 
 model.fit(inputs_train, labels_train, epochs=10)
 
-test_loss, test_acc = model.evaluate(inputs_test,  labels_test, verbose=1) 
+print('Test')
 
-print('Test accuracy:', test_acc)
+test_loss, test_acc = model.evaluate(inputs_test,  labels_test, verbose=1)
