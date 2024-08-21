@@ -30,7 +30,8 @@ inputs_train, inputs_test, labels_train, labels_test = train_test_split(
 
 model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),  # hidden layer (1)
-    keras.layers.Dense(3, activation='softmax')  # output layer (2)
+    keras.layers.Dense(128, activation='relu'),  # hidden layer (2)
+    keras.layers.Dense(3, activation='softmax')  # output layer (3)
 ])
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
