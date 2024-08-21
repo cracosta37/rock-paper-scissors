@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from tensorflow import keras
 
 import constants as c
 
@@ -21,3 +22,12 @@ for i in range(len(data_from_record_dtclf)):
         inputs = np.vstack([inputs, data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
 
 labels = np.array(labels_list)
+
+model = keras.Sequential([
+    keras.layers.Dense(128, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),  # hidden layer (1)
+    keras.layers.Dense(3, activation='softmax')  # output layer (2)
+])
+
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+model.fit(inputs, labels, epochs=10)
