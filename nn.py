@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
+from sklearn.model_selection import train_test_split
 
 import constants as c
 
@@ -23,6 +24,10 @@ for i in range(len(data_from_record_dtclf)):
 
 labels = np.array(labels_list)
 
+inputs_train, inputs_test, labels_train, labels_test = train_test_split(
+    inputs, labels, test_size=0.3, random_state=42
+)
+
 model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),  # hidden layer (1)
     keras.layers.Dense(3, activation='softmax')  # output layer (2)
@@ -30,4 +35,4 @@ model = keras.Sequential([
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-model.fit(inputs, labels, epochs=10)
+model.fit(inputs_train, labels_train, epochs=10)
