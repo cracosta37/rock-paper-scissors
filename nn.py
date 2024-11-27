@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import joblib
 import tensorflow as tf
 from tensorflow import keras
 from sklearn.model_selection import train_test_split
@@ -30,18 +31,20 @@ inputs_train, inputs_test, labels_train, labels_test = train_test_split(
 )
 
 model = keras.Sequential([
-    keras.layers.Dense(8, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),
-    keras.layers.Dropout(0.2),
-    keras.layers.Dense(32, activation='relu'),
-    keras.layers.Dropout(0.2),
+    keras.layers.Dense(16, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),
+    keras.layers.Dropout(0.1),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dropout(0.1),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dropout(0.1),
     keras.layers.Dense(3, activation='softmax')
 ])
 
-optimizer = keras.optimizers.Adam(learning_rate=0.01)
+optimizer = keras.optimizers.Adam(learning_rate=0.005)
 
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-training_history = model.fit(inputs_train, labels_train, epochs=50, batch_size=2**4, validation_split=0.2, class_weight={0: 1, 1: 1, 2: 1})
+training_history = model.fit(inputs_train, labels_train, epochs=500, batch_size=2**6, validation_split=0.2, class_weight={0: 1, 1: 1, 2: 1})
 
 plt.plot(training_history.history['loss'])
 plt.plot(training_history.history['val_loss'])
@@ -60,3 +63,5 @@ plt.show()
 print('Test')
 
 test_loss, test_acc = model.evaluate(inputs_test,  labels_test, verbose=1)
+
+joblib.dump(model, 'model.pkl')
