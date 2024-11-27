@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from sklearn.model_selection import train_test_split
@@ -25,18 +26,36 @@ for i in range(len(data_from_record_dtclf)):
 labels = np.array(labels_list)
 
 inputs_train, inputs_test, labels_train, labels_test = train_test_split(
-    inputs, labels, test_size=0.3, random_state=42
+    inputs, labels, test_size=0.2, random_state=42
 )
 
 model = keras.Sequential([
-    keras.layers.Dense(128, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),  # hidden layer (1)
-    keras.layers.Dense(128, activation='relu'),  # hidden layer (2)
-    keras.layers.Dense(3, activation='softmax')  # output layer (3)
+    keras.layers.Dense(8, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(32, activation='relu'),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(3, activation='softmax')
 ])
 
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+optimizer = keras.optimizers.Adam(learning_rate=0.01)
 
-model.fit(inputs_train, labels_train, epochs=10)
+model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+training_history = model.fit(inputs_train, labels_train, epochs=50, batch_size=2**4, validation_split=0.2, class_weight={0: 1, 1: 1, 2: 1})
+
+plt.plot(training_history.history['loss'])
+plt.plot(training_history.history['val_loss'])
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.show() 
+
+plt.plot(training_history.history['accuracy'])
+plt.plot(training_history.history['val_accuracy'])
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show() 
 
 print('Test')
 
