@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from random import choice
+import joblib
 
 def score_model(model, opponent_history=[]): 
     """ Returns a score for a model's performance based on opponent history """
@@ -131,4 +132,5 @@ def model3(opponent_history=[]):
     return guess
 
 def model4(opponent_history=[]):
+    nn_model = joblib.load('Models/nn_model.pkl')
     return
