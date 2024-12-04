@@ -21,5 +21,5 @@ def player(prev_play, opponent_history=None):
 
     # Use the corresponding model to make a guess
     guess = models[max_score_index](opponent_history)
-
+    
     return guess
