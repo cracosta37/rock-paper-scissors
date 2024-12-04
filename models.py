@@ -134,5 +134,16 @@ def model3(opponent_history=[]):
     return guess
 
 def model4(opponent_history=[]):
+    """ Uses a NN model to predict the next player's choice. """
+    
+    rps_nums = ['R', 'P', 'S']
+    
+    if len(opponent_history) < c.NUMBER_OF_INPUTS:
+        guess = choice(['R', 'P', 'S'])
+    
+    recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+
     nn_model = joblib.load('Models/nn_model.pkl')
-    return
+
+    guess = rps_nums[int(nn_model.predict(recent_history))]
+    return guess
