@@ -140,10 +140,12 @@ def model4(opponent_history=[]):
     
     if len(opponent_history) < c.NUMBER_OF_INPUTS:
         guess = choice(['R', 'P', 'S'])
+        return guess
     
     recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+    recent_history = recent_history.reshape(1, -1)
 
-    nn_model = joblib.load('Models/nn_model.pkl')
+    nn_model = joblib.load('models/nn_model.pkl')
 
     guess = rps_nums[int(nn_model.predict(recent_history))]
     return guess
