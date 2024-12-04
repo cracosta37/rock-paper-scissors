@@ -3,6 +3,8 @@ import numpy as np
 from random import choice
 import joblib
 
+import constants as c
+
 def score_model(model, opponent_history=[]): 
     """ Returns a score for a model's performance based on opponent history """
 
