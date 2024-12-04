@@ -7,12 +7,14 @@ def player(prev_play, opponent_history=[]):
     
     opponent_history.append(prev_play)
 
+    scores = []
 
+    for i in range(5):
+        score = score_model(f'model{i}', opponent_history)
+        scores.append(score)
+    
+    max_score_model = int(scores.index(max(scores)))
 
-
-
-    guess = "R"
-    if len(opponent_history) > 2:
-        guess = opponent_history[-2]
+    guess = f'model{max_score_model}'(opponent_history)
 
     return guess
