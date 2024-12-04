@@ -2,10 +2,14 @@
 from models import score_model, model0, model1, model2, model3, model4
 
 def player(prev_play, opponent_history=[]):
-    if prev_play == '':
+    if prev_play == "":
         prev_play = "R"
     
     opponent_history.append(prev_play)
+
+
+
+
 
     guess = "R"
     if len(opponent_history) > 2:
