@@ -1,20 +1,25 @@
 # The example function below keeps track of the opponent's history and plays whatever the opponent played two plays ago. It is not a very good player so you will need to change the code to pass the challenge.
 from models import score_model, model0, model1, model2, model3, model4
 
-def player(prev_play, opponent_history=[]):
+def player(prev_play, opponent_history=None):
+    if opponent_history is None:
+        opponent_history = [] # Initialize a new list if none is provided
+
     if prev_play == "":
-        prev_play = "R"
+        prev_play = "R"  # Default move for the first play
     
     opponent_history.append(prev_play)
 
-    scores = []
+    # List of model functions
+    models = [model0, model1, model2, model3, model4]
 
-    for i in range(5):
-        score = score_model(f'model{i}', opponent_history)
-        scores.append(score)
+    # Compute scores for each model
+    scores = [score_model(model, opponent_history) for model in models]
     
-    max_score_model = int(scores.index(max(scores)))
+    # Find the model with the highest score
+    max_score_index = scores.index(max(scores))
 
-    guess = f'model{max_score_model}'(opponent_history)
+    # Use the corresponding model to make a guess
+    guess = models[max_score_index](opponent_history)
 
     return guess
