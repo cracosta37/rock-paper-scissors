@@ -147,5 +147,5 @@ def model4(opponent_history=[]):
 
     nn_model = joblib.load('models/nn_model.pkl')
 
-    guess = rps_nums[int(nn_model.predict(recent_history))]
+    guess = rps_nums[int(np.argmax(nn_model.predict(recent_history)))]
     return guess
