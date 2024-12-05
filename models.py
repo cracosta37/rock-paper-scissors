@@ -5,7 +5,7 @@ import joblib
 
 import constants as c
 
-def score_model(model, opponent_history=[]): 
+def score_model(model, opponent_history): 
     """ Returns a score for a model's performance based on opponent history """
 
     if len(opponent_history) < 2:
@@ -41,7 +41,7 @@ def vectorize(choice1, choice2):
     else:
         return 0
 
-def model0(opponent_history=[]):
+def model0(opponent_history):
     """
     Chooses the guess that would lose to or beat the player's 
     last guess. Based on whether a player is changing their answers 
@@ -63,7 +63,7 @@ def model0(opponent_history=[]):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model1(opponent_history=[]):
+def model1(opponent_history):
     """
     Vector-based choice based on past three rounds. For simple patterns, such as 
     S-R-P-S-R-P..., P-R-P-R..., or P-P-P...
@@ -93,7 +93,7 @@ def model1(opponent_history=[]):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model2(opponent_history=[]):
+def model2(opponent_history):
     """
     Chooses the choice that would beat the player's most frequent recent 
     choice. Based on repeated choices
@@ -113,7 +113,7 @@ def model2(opponent_history=[]):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model3(opponent_history=[]):
+def model3(opponent_history):
     """
     Chooses the choice that would beat the player's least frequent recent 
     choice. Based on repeated choices
@@ -133,7 +133,7 @@ def model3(opponent_history=[]):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model4(opponent_history=[]):
+def model4(opponent_history):
     """ Uses a NN model to predict the next player's choice. """
     
     rps_nums = ['R', 'P', 'S']
