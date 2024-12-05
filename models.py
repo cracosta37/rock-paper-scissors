@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from random import choice
-import joblib
+from joblib import load
 
 import constants as c
 
@@ -133,7 +133,7 @@ def model3(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model4(opponent_history):
+def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
     """ Uses a NN model to predict the next player's choice. """
     
     rps_nums = ['R', 'P', 'S']
@@ -144,8 +144,6 @@ def model4(opponent_history):
     
     recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
     recent_history = recent_history.reshape(1, -1)
-
-    nn_model = joblib.load('models/nn_model.pkl')
 
     prediction = nn_model.predict(recent_history)
 
