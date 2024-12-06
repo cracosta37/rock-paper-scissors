@@ -6,27 +6,22 @@ from joblib import load
 import constants as c
 
 def score_model(model, opponent_history): 
-    """ Returns a score for a model's performance based on opponent history """
+    """
+    Returns the last term of the summation used to calculate the score
+    for a model's performance based on the opponent's history.
+    """
 
-    if len(opponent_history) < 2:
-        return float(-1.0)
-    
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
 
-    model_record = []
-    w_max = 0
-    for i in range(1, len(opponent_history)):
-        if model(opponent_history[:i]) == ideal_response[opponent_history[i]]:
-            model_record.append(i**2)
-        elif model(opponent_history[:i]) == worse_response[opponent_history[i]]:
-            model_record.append(-i**2)
-        w_max += i**2
-
-        if w_max == 0:
-            return float(0.0)
-   
-    return np.sum(model_record) / w_max
+    l = len(opponent_history)
+    if l < 2:
+        return float(-1.0) 
+    if model(opponent_history[:-1]) == ideal_response[opponent_history[-1]]:
+        return (l-1)**2   
+    if model(opponent_history[:-1]) == worse_response[opponent_history[-1]]:
+        return -(l-1)**2
+    return 0
 
 def vectorize(choice1, choice2):
     """ Returns a vector describing the difference between one choice and another """
