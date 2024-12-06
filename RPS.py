@@ -18,7 +18,7 @@ def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=
     scores = [score + last_score for score, last_score in zip(scores, last_scores)]
 
     # Normalizing scores to avoid overflow and emphasize long histories
-    normalization_factor = sum(i**2 for i in range(1, l_opponent_history))
+    normalization_factor = sum(i**2 for i in range(l_opponent_history))
     if normalization_factor > 0:
         scores = [score / normalization_factor for score in scores]
   
