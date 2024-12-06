@@ -21,6 +21,8 @@ def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=
     normalization_factor = sum(i**2 for i in range(l_opponent_history))
     if normalization_factor > 0:
         normalized_scores = [score / normalization_factor for score in scores]
+    else:
+        normalized_scores = [0] * 5
   
     # Finding the model with the highest score
     max_score_index = normalized_scores.index(max(normalized_scores))
