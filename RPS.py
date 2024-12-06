@@ -23,7 +23,7 @@ def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=
         normalized_scores = [score / normalization_factor for score in scores]
   
     # Finding the model with the highest score
-    max_score_index = scores.index(max(normalized_scores))
+    max_score_index = normalized_scores.index(max(normalized_scores))
 
     # Calculating the model's guesses and updating prev_guesses
     prev_guesses = [models[i](opponent_history) for i in range(5)]
