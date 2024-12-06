@@ -148,6 +148,7 @@ def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
     recent_history = recent_history.reshape(1, -1)
 
     prediction = nn_model.predict(recent_history)
+    prediction = rps_nums[int(np.argmax(prediction[0]))]
 
-    guess = ideal_response[rps_nums[int(np.argmax(prediction[0]))]]
+    guess = ideal_response[prediction]
     return guess
