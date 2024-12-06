@@ -139,7 +139,7 @@ def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
     recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
     recent_history = recent_history.reshape(1, -1)
 
-    prediction = nn_model.predict(recent_history)
+    prediction = nn_model.predict(recent_history, verbose=0)
     prediction = rps_nums[int(np.argmax(prediction[0]))]
 
     guess = ideal_response[prediction]
