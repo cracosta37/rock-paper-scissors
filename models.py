@@ -5,7 +5,7 @@ from joblib import load
 
 import constants as c
 
-def score_model(model, opponent_history): 
+def last_score_model(prev_guess, prev_play, l_opponent_history): 
     """
     Returns the last term of the summation used to calculate the score
     for a model's performance based on the opponent's history.
@@ -14,13 +14,10 @@ def score_model(model, opponent_history):
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
 
-    l = len(opponent_history)
-    if l < 2:
-        return float(-1.0) 
-    if model(opponent_history[:-1]) == ideal_response[opponent_history[-1]]:
-        return (l-1)**2   
-    if model(opponent_history[:-1]) == worse_response[opponent_history[-1]]:
-        return -(l-1)**2
+    if prev_guess == ideal_response[prev_play]:
+        return (l_opponent_history-1)**2   
+    if prev_guess == worse_response[prev_play]:
+        return -(l_opponent_history-1)**2
     return 0
 
 def vectorize(choice1, choice2):
