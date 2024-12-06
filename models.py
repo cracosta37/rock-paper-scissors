@@ -134,8 +134,10 @@ def model3(opponent_history):
     return guess
 
 def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
-    """ Uses a NN model to predict the next player's choice. """
-    
+    """
+    Chooses the choice that would beat the predicted the next player's choice using a NN model. 
+    """
+    ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     rps_nums = ['R', 'P', 'S']
     
     if len(opponent_history) < c.NUMBER_OF_INPUTS:
@@ -147,5 +149,5 @@ def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
 
     prediction = nn_model.predict(recent_history)
 
-    guess = rps_nums[int(np.argmax(prediction[0]))]
+    guess = ideal_response[rps_nums[int(np.argmax(prediction[0]))]]
     return guess
