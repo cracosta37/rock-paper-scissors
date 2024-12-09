@@ -1,16 +1,9 @@
 import unittest
 from RPS_game import play, mrugesh, abbey, quincy, kris
 from RPS import player
-from unittest.mock import patch
-
 
 class UnitTests(unittest.TestCase):
     print()
-
-    def setUp(self):
-        patcher = patch('RPS.state', {})
-        self.addCleanup(patcher.stop)
-        self.mock_state = patcher.start()
 
     def test_player_vs_quincy(self):
         print("Testing game against quincy...")

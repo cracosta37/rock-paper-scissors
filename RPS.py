@@ -3,8 +3,6 @@ from models import last_score_model, model0, model1, model2, model3, model4
 
 import constants as c
 
-state = {}
-
 def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_guesses=c.DEFAULT_GUESSES.copy()):
 
     # Default move for the first play
@@ -36,8 +34,3 @@ def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_
     guess = prev_guesses[max_score_index]
 
     return guess
-
-opponent_history = ['', 'R', 'P', 'S', 'R']
-
-for prev_play in opponent_history:
-    player(prev_play)
