@@ -1,1 +1,3 @@
 NUMBER_OF_INPUTS = 7
+DEFAULT_SCORES = [0, 0, 0, 0, 0]
+DEFAULT_GUESSES = ['R', 'R', 'R', 'R', 'R']

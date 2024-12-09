@@ -1,10 +1,15 @@
 # The example function below keeps track of the opponent's history and plays whatever the opponent played two plays ago. It is not a very good player so you will need to change the code to pass the challenge.
 from models import last_score_model, model0, model1, model2, model3, model4
 
-def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=['R', 'R', 'R', 'R', 'R']):
+import constants as c
 
+state = {}
+
+def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_guesses=c.DEFAULT_GUESSES.copy()):
+
+    # Default move for the first play
     if prev_play == '':
-        prev_play = 'R' # Default move for the first play
+        prev_play = 'R'
     
     # Updating of opponent history
     opponent_history.append(prev_play)
@@ -18,12 +23,9 @@ def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=
     scores = [score + last_score for score, last_score in zip(scores, last_scores)]
 
     # Normalizing scores to avoid overflow and emphasize long histories
-    normalization_factor = sum(i**2 for i in range(l_opponent_history))
-    if normalization_factor > 0:
-        normalized_scores = [score / normalization_factor for score in scores]
-    else:
-        normalized_scores = [0] * 5
-  
+    normalization_factor = sum(i**2 for i in range(l_opponent_history)) or 1
+    normalized_scores = [score / normalization_factor for score in scores]
+   
     # Finding the model with the highest score
     max_score_index = normalized_scores.index(max(normalized_scores))
 
@@ -34,3 +36,8 @@ def player(prev_play, opponent_history=[], scores=[0, 0, 0, 0, 0], prev_guesses=
     guess = prev_guesses[max_score_index]
 
     return guess
+
+opponent_history = ['', 'R', 'P', '', 'S', 'R']
+
+for prev_play in opponent_history:
+    player(prev_play)
