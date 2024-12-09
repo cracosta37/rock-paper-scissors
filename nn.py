@@ -8,8 +8,8 @@ from sklearn.model_selection import train_test_split
 
 import constants as c
 
-data_from_record122 = pd.read_csv('Data/rps-record122.csv')
-data_from_record_dtclf = pd.read_csv('Data/rps-record_dtclf.csv')
+data_from_record122 = pd.read_csv('data/rps-record122.csv')
+data_from_record_dtclf = pd.read_csv('data/rps-record_dtclf.csv')
 
 """Data transformation"""
 
