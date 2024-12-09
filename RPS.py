@@ -9,7 +9,7 @@ def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_
 
     # Default move for the first play
     if prev_play == '':
-        prev_play = 'R'
+        prev_play = c.DEFAULT_PREV_PLAY
     
     # Updating of opponent history
     opponent_history.append(prev_play)
@@ -37,7 +37,7 @@ def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_
 
     return guess
 
-opponent_history = ['', 'R', 'P', '', 'S', 'R']
+opponent_history = ['', 'R', 'P', 'S', 'R']
 
 for prev_play in opponent_history:
     player(prev_play)
