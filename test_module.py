@@ -5,10 +5,6 @@ from RPS import player
 class UnitTests(unittest.TestCase):
     print()
 
-    def setUp(self):
-        # Reset player state or recreate the player instance before every test
-        self.player = player('')  # Create a new fresh instance of `player` for each test case.
-
     def test_player_vs_quincy(self):
         print("Testing game against quincy...")
         actual = play(player, quincy, 1000) >= 60
