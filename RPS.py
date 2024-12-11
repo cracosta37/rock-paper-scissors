@@ -22,13 +22,9 @@ def player(prev_play):
     # Computing scores for each model
     last_scores = [last_score_model(prev_guess, prev_play, l_opponent_history) for prev_guess in player.prev_guesses]
     player.scores = [score + last_score for score, last_score in zip(player.scores, last_scores)]
-
-    # Normalizing scores to avoid overflow and emphasize long histories
-    normalization_factor = sum(i**2 for i in range(l_opponent_history)) or 1
-    normalized_scores = [score / normalization_factor for score in player.scores]
    
     # Finding the model with the highest score
-    max_score_index = normalized_scores.index(max(normalized_scores))
+    max_score_index = player.scores.index(max(player.scores))
 
     # Calculating the model's guesses and updating prev_guesses
     player.prev_guesses = [models[i](player.opponent_history) for i in range(5)]
