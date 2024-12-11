@@ -1,13 +1,17 @@
 # The example function below keeps track of the opponent's history and plays whatever the opponent played two plays ago. It is not a very good player so you will need to change the code to pass the challenge.
 from models import last_score_model, model0, model1, model2, model3, model4
+from copy import deepcopy
 
 import constants as c
 
 def player(prev_play, opponent_history=[], scores=c.DEFAULT_SCORES.copy(), prev_guesses=c.DEFAULT_GUESSES.copy()):
 
-    # Default move for the first play
+    # Default vaules for the first play
     if prev_play == '':
-        prev_play = c.DEFAULT_PREV_PLAY
+        prev_play = deepcopy(c.DEFAULT_PREV_PLAY)
+        opponent_history = deepcopy([])
+        scores = deepcopy(c.DEFAULT_SCORES)
+        prev_guesses = deepcopy(c.DEFAULT_GUESSES)
     
     # Updating of opponent history
     opponent_history.append(prev_play)
