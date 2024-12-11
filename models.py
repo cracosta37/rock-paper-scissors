@@ -125,13 +125,16 @@ def model3(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
+def model4(opponent_history):
     """
     Chooses the choice that would beat the predicted the next player's choice using a NN model. 
     """
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     rps_nums = ['R', 'P', 'S']
     
+    if not hasattr(model4, "nn_model") or len(opponent_history) < 2:
+        model4.nn_model = load('models/nn_model.pkl')
+
     if len(opponent_history) < c.NUMBER_OF_INPUTS:
         guess = choice(['R', 'P', 'S'])
         return guess
@@ -139,7 +142,7 @@ def model4(opponent_history, nn_model=load('models/nn_model.pkl')):
     recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
     recent_history = recent_history.reshape(1, -1)
 
-    prediction = nn_model.predict(recent_history, verbose=0)
+    prediction = model4.nn_model.predict(recent_history, verbose=0)
     prediction = rps_nums[int(np.argmax(prediction[0]))]
 
     guess = ideal_response[prediction]
