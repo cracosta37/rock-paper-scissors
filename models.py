@@ -132,7 +132,7 @@ def model4(opponent_history):
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     rps_nums = ['R', 'P', 'S']
     
-    if not hasattr(model4, "nn_model") or len(opponent_history) < 2:
+    if not hasattr(model4, "nn_model"):
         model4.nn_model = load('models/nn_model.pkl')
 
     if len(opponent_history) < c.NUMBER_OF_INPUTS:
