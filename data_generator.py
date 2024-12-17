@@ -10,10 +10,10 @@ record = pd.DataFrame(columns=['game_id', 'round', 'p1'])
 
 
 for i in range(4):
-    play(player, players[i], 1000)
+    play(player, players[i], c.NUMBER_OF_GAMES)
     temp_df = pd.DataFrame({
         'game_id': i,                  
-        'round': range(1000),          
+        'round': range(c.NUMBER_OF_GAMES),          
         'p1': player.opponent_history          
     })
     record = pd.concat([record, temp_df], ignore_index=True)
