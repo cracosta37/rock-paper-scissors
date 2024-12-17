@@ -8,23 +8,17 @@ from sklearn.model_selection import train_test_split
 
 import constants as c
 
-data_from_record122 = pd.read_csv('data/rps-record122.csv')
-data_from_record_dtclf = pd.read_csv('data/rps-record_dtclf.csv')
+data_from_record = pd.read_csv('data/record.csv')
 
 """Data transformation"""
 
 labels_list = []
 inputs = np.empty((0, c.NUMBER_OF_INPUTS))
 
-for i in range(len(data_from_record122)):
-    if data_from_record122.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
-        labels_list.append([data_from_record122.iloc[i]['p1']])
-        inputs = np.vstack([inputs, data_from_record122.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
-
-for i in range(len(data_from_record_dtclf)):
-    if data_from_record_dtclf.iloc[i]['n'] >= c.NUMBER_OF_INPUTS:
-        labels_list.append([data_from_record_dtclf.iloc[i]['p1']])
-        inputs = np.vstack([inputs, data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
+for i in range(len(data_from_record)):
+    if data_from_record.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
+        labels_list.append([data_from_record.iloc[i]['p1']])
+        inputs = np.vstack([inputs, data_from_record.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
 
 labels = np.array(labels_list)
 
