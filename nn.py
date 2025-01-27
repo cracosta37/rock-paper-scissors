@@ -14,17 +14,27 @@ data_from_record_dtclf = pd.read_csv('data/rps-record_dtclf.csv')
 # Data transformation
 
 labels_list = []
-inputs = np.empty((0, c.NUMBER_OF_INPUTS))
+inputs = np.empty((0, 2*c.NUMBER_OF_INPUTS))
 
 for i in range(len(data_from_record122)):
     if data_from_record122.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
-        labels_list.append([data_from_record122.iloc[i]['p1']])
-        inputs = np.vstack([inputs, data_from_record122.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
+        p1_data = data_from_record122.iloc[i-c.NUMBER_OF_INPUTS:i]['p1'].values
+        p2_data = data_from_record122.iloc[i-c.NUMBER_OF_INPUTS:i]['p2'].values
+  
+        combined_input = np.hstack([p1_data, p2_data])
+        
+        inputs = np.vstack([inputs, combined_input])
+        labels_list.append(data_from_record122.iloc[i]['p1'])
 
 for i in range(len(data_from_record_dtclf)):
     if data_from_record_dtclf.iloc[i]['n'] >= c.NUMBER_OF_INPUTS:
-        labels_list.append([data_from_record_dtclf.iloc[i]['p1']])
-        inputs = np.vstack([inputs, data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
+        p1_data = data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p1'].values
+        p2_data = data_from_record_dtclf.iloc[i-c.NUMBER_OF_INPUTS:i]['p2'].values
+  
+        combined_input = np.hstack([p1_data, p2_data])
+        
+        inputs = np.vstack([inputs, combined_input])
+        labels_list.append(data_from_record_dtclf.iloc[i]['p1'])
 
 labels = np.array(labels_list)
 
@@ -35,7 +45,7 @@ inputs_train, inputs_test, labels_train, labels_test = train_test_split(
 )
 
 model = keras.Sequential([
-    keras.layers.Dense(16, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),
+    keras.layers.Dense(16, activation='relu', input_shape=(2*c.NUMBER_OF_INPUTS,)),
     keras.layers.Dropout(0.1),
     keras.layers.Dense(64, activation='relu'),
     keras.layers.Dropout(0.1),
