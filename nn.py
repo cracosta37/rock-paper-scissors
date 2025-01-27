@@ -11,7 +11,7 @@ import constants as c
 data_from_record122 = pd.read_csv('data/rps-record122.csv')
 data_from_record_dtclf = pd.read_csv('data/rps-record_dtclf.csv')
 
-"""Data transformation"""
+# Data transformation
 
 labels_list = []
 inputs = np.empty((0, c.NUMBER_OF_INPUTS))
@@ -28,7 +28,7 @@ for i in range(len(data_from_record_dtclf)):
 
 labels = np.array(labels_list)
 
-"""NN model"""
+# NN model
 
 inputs_train, inputs_test, labels_train, labels_test = train_test_split(
     inputs, labels, test_size=0.2, random_state=42
@@ -50,8 +50,7 @@ model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metri
 
 training_history = model.fit(inputs_train, labels_train, epochs=500, batch_size=2**6, validation_split=0.2, class_weight={0: 1, 1: 1, 2: 1})
 
-
-"""Evaluation of the model"""
+# Evaluation of the model
 
 plt.plot(training_history.history['loss'])
 plt.plot(training_history.history['val_loss'])
