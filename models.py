@@ -33,7 +33,7 @@ def vectorize(choice1, choice2):
     else:
         return 0
 
-def model0(opponent_history):
+def model0(opponent_history, player_history):
     """
     Chooses the guess that would lose to or beat the player's 
     last guess. Based on whether a player is changing their answers 
@@ -64,7 +64,7 @@ def model1(opponent_history):
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
 
-    if len(opponent_history) > 1:        
+    if len(opponent_history, player_history) > 1:        
         if len(opponent_history) > 2:
             vector1 = vectorize(opponent_history[-1], opponent_history[-2]) 
             vector2 = vectorize(opponent_history[-2], opponent_history[-3])            
@@ -85,7 +85,7 @@ def model1(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model2(opponent_history):
+def model2(opponent_history, player_history):
     """
     Chooses the choice that would beat the player's most frequent recent 
     choice. Based on repeated choices
@@ -105,7 +105,7 @@ def model2(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model3(opponent_history):
+def model3(opponent_history, player_history):
     """
     Chooses the choice that would beat the player's least frequent recent 
     choice. Based on repeated choices
