@@ -125,7 +125,7 @@ def model3(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model4(opponent_history):
+def model4(opponent_history, player_history):
     """
     Chooses the choice that would beat the predicted the next player's choice using a NN model. 
     """
@@ -139,7 +139,10 @@ def model4(opponent_history):
         guess = choice(['R', 'P', 'S'])
         return guess
     
-    recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+    recent_opponent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+    recent_player_history = np.array(pd.Series(player_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+
+    recent_history = np.vstack((recent_opponent_history, recent_player_history))
     recent_history = recent_history.reshape(1, -1)
 
     prediction = model4.nn_model.predict(recent_history, verbose=0)
