@@ -142,7 +142,7 @@ def model4(opponent_history, player_history):
     recent_opponent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
     recent_player_history = np.array(pd.Series(player_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
 
-    recent_history = np.vstack((recent_opponent_history, recent_player_history))
+    recent_history = np.hstack([recent_opponent_history, recent_player_history])
     recent_history = recent_history.reshape(1, -1)
 
     prediction = model4.nn_model.predict(recent_history, verbose=0)
