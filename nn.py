@@ -62,15 +62,15 @@ training_history = model.fit(inputs_train, labels_train, epochs=500, batch_size=
 
 # Evaluation of the model
 
-plt.plot(training_history.history['loss'])
-plt.plot(training_history.history['val_loss'])
+plt.plot(training_history.history['loss'], label='Training Loss')
+plt.plot(training_history.history['val_loss'], label='Validation Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
 plt.show() 
 
-plt.plot(training_history.history['accuracy'])
-plt.plot(training_history.history['val_accuracy'])
+plt.plot(training_history.history['accuracy'], label='Validation accuracy')
+plt.plot(training_history.history['val_accuracy'], label='Validation accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend()
