@@ -55,7 +55,7 @@ def model0(opponent_history, player_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model1(opponent_history):
+def model1(opponent_history, player_history):
     """
     Vector-based choice based on past three rounds. For simple patterns, such as 
     S-R-P-S-R-P..., P-R-P-R..., or P-P-P...
@@ -64,7 +64,7 @@ def model1(opponent_history):
     ideal_response = {'P': 'S', 'R': 'P', 'S': 'R'}
     worse_response = {'S': 'P', 'P': 'R', 'R': 'S'}
 
-    if len(opponent_history, player_history) > 1:        
+    if len(opponent_history) > 1:        
         if len(opponent_history) > 2:
             vector1 = vectorize(opponent_history[-1], opponent_history[-2]) 
             vector2 = vectorize(opponent_history[-2], opponent_history[-3])            
