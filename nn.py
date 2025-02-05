@@ -82,4 +82,4 @@ print('Test')
 
 test_loss, test_acc = model.evaluate(inputs_test,  labels_test, verbose=1)
 
-# joblib.dump(model, 'model.pkl')
+# joblib.dump(model, 'nn_model.pkl')
