@@ -17,8 +17,13 @@ inputs = np.empty((0, c.NUMBER_OF_INPUTS))
 
 for i in range(len(data_from_record)):
     if data_from_record.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
-        labels_list.append([data_from_record.iloc[i]['p1']])
-        inputs = np.vstack([inputs, data_from_record.iloc[i-c.NUMBER_OF_INPUTS:i]['p1']])
+        p1_data = data_from_record.iloc[i-c.NUMBER_OF_INPUTS:i]['p1'].values
+        p2_data = data_from_record.iloc[i-c.NUMBER_OF_INPUTS:i]['p2'].values
+  
+        combined_input = np.hstack([p1_data, p2_data])
+        
+        inputs = np.vstack([inputs, combined_input])
+        labels_list.append(data_from_record.iloc[i]['p1'])
 
 labels = np.array(labels_list)
 
@@ -29,7 +34,7 @@ inputs_train, inputs_test, labels_train, labels_test = train_test_split(
 )
 
 model = keras.Sequential([
-    keras.layers.Dense(16, activation='relu', input_shape=(c.NUMBER_OF_INPUTS,)),
+    keras.layers.Dense(16, activation='relu', input_shape=(2*c.NUMBER_OF_INPUTS,)),
     keras.layers.Dropout(0.1),
     keras.layers.Dense(64, activation='relu'),
     keras.layers.Dropout(0.1),
@@ -47,19 +52,21 @@ training_history = model.fit(inputs_train, labels_train, epochs=500, batch_size=
 
 """Evaluation of the model"""
 
-plt.plot(training_history.history['loss'])
-plt.plot(training_history.history['val_loss'])
+plt.plot(training_history.history['loss'], label='Training Loss')
+plt.plot(training_history.history['val_loss'], label='Validation Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
+plt.savefig('plots/loss.png') 
 plt.show() 
 
-plt.plot(training_history.history['accuracy'])
-plt.plot(training_history.history['val_accuracy'])
+plt.plot(training_history.history['accuracy'], label='Training accuracy')
+plt.plot(training_history.history['val_accuracy'], label='Validation accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend()
-plt.show() 
+plt.savefig('plots/accuracy.png') 
+plt.show()
 
 print('Test')
 
