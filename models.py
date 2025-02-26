@@ -33,7 +33,7 @@ def vectorize(choice1, choice2):
     else:
         return 0
 
-def model0(opponent_history):
+def model0(opponent_history, player_history):
     """
     Chooses the guess that would lose to or beat the player's 
     last guess. Based on whether a player is changing their answers 
@@ -55,7 +55,7 @@ def model0(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model1(opponent_history):
+def model1(opponent_history, player_history):
     """
     Vector-based choice based on past three rounds. For simple patterns, such as 
     S-R-P-S-R-P..., P-R-P-R..., or P-P-P...
@@ -85,7 +85,7 @@ def model1(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model2(opponent_history):
+def model2(opponent_history, player_history):
     """
     Chooses the choice that would beat the player's most frequent recent 
     choice. Based on repeated choices
@@ -105,7 +105,7 @@ def model2(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model3(opponent_history):
+def model3(opponent_history, player_history):
     """
     Chooses the choice that would beat the player's least frequent recent 
     choice. Based on repeated choices
@@ -125,7 +125,7 @@ def model3(opponent_history):
         guess = choice(['R', 'P', 'S'])
     return guess
 
-def model4(opponent_history):
+def model4(opponent_history, player_history):
     """
     Chooses the choice that would beat the predicted the next player's choice using a NN model. 
     """
@@ -139,7 +139,10 @@ def model4(opponent_history):
         guess = choice(['R', 'P', 'S'])
         return guess
     
-    recent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+    recent_opponent_history = np.array(pd.Series(opponent_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+    recent_player_history = np.array(pd.Series(player_history[-c.NUMBER_OF_INPUTS:]).map({'R': 0, 'P': 1, 'S': 2}))
+
+    recent_history = np.hstack([recent_opponent_history, recent_player_history])
     recent_history = recent_history.reshape(1, -1)
 
     prediction = model4.nn_model.predict(recent_history, verbose=0)
