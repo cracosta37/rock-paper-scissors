@@ -13,7 +13,7 @@ data_from_record = pd.read_csv('data/record.csv')
 """Data transformation"""
 
 labels_list = []
-inputs = np.empty((0, c.NUMBER_OF_INPUTS))
+inputs = np.empty((0, 2*c.NUMBER_OF_INPUTS))
 
 for i in range(len(data_from_record)):
     if data_from_record.iloc[i]['round'] >= c.NUMBER_OF_INPUTS:
